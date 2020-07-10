@@ -9,7 +9,7 @@ export default class PokedexAPIService {
     const url = `${PokedexAPIService.URI}?limit=${limit}`;
     const response = await fetch(url);
     const parsed: APIListResponse = await response.json();
-    const pokemon = parsed.results.map((i: APIListResponseItem) => new Pokemon(i.name));
+    const pokemon = parsed.results.map((i: APIListResponseItem) => new Pokemon(i.name, i.url));
 
     return pokemon;
   }
