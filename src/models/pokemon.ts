@@ -28,6 +28,10 @@ export default class Pokemon {
     return this.id || this.name;
   }
 
+  get spriteURL(): string {
+    return `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${this.id}.png`;
+  }
+
   private ensureID() {
     if(this.id) {
       return;
