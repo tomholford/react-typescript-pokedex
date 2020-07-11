@@ -24,6 +24,10 @@ export default class Pokemon {
     return new Pokemon(parsed.name, parsed.url, parsed.id, parsed.types);
   }
 
+  get displayName(): string {
+    return this.name;
+  }
+
   get key(): number | string {
     return this.id || this.name;
   }

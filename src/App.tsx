@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import './App.css';
+import './App.scss';
 
 import Pokemon from './models/pokemon';
 import PokemonList from './components/PokemonList';
@@ -16,9 +16,7 @@ function App() {
 
   return (
     <div className="App">
-      <header className="App-header">
-        <PokemonList pokemon={pokemon} />
-      </header>
+      <PokemonList pokemon={pokemon} />
     </div>
   );
 }

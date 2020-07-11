@@ -4,9 +4,9 @@ import PokemonListItem from './PokemonListItem';
 
 const PokemonList: React.FC<{ pokemon: Pokemon[] | null }> = ({ pokemon }) => {
   return (
-    <ul>
+    <div className="">
       { pokemon?.map((p) => <PokemonListItem pokemon={p} key={p.key} />) }
-    </ul>
+    </div>
   );
 }
 
