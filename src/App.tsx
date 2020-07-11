@@ -1,18 +1,20 @@
-import React from 'react';
+import React, { useState } from 'react';
 import './App.css';
 
 import PokedexAPIService from './services/pokedex_api_service';
 import Pokemon from './models/pokemon';
+import PokemonList from './components/PokemonList';
 
 function App() {
-  const api = new PokedexAPIService();
+  const [pokemon, setPokemon] = useState<Pokemon[] | null>([]);
 
-  api.getPokemon().then((pokemon: Pokemon[]) => console.log(pokemon));
+  const api = new PokedexAPIService();
+  api.getPokemon().then((pokemon: Pokemon[]) => setPokemon(pokemon));
 
   return (
     <div className="App">
       <header className="App-header">
-        <p>pokeman</p>
+        <PokemonList pokemon={pokemon} />
       </header>
     </div>
   );
