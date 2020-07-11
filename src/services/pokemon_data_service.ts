@@ -4,33 +4,38 @@ import PokedexAPIService from "./pokedex_api_service";
 class PokemonDataService {
   static readonly MAX_POKEMON_ID = 152;
 
-  pokemon: Pokemon[] = [];
+  private _pokemon: Pokemon[] = [];
 
-  async init(): Promise<void> {
-    if(this.isCached) {
-      this.loadFromCache();
+  async load(): Promise<Pokemon[]> {
+    if(!this.isCached) {
+      this._pokemon = await this.loadFromAPI();
+      this.populateCache();
     } else {
-      await this.cacheData();
+      this.loadFromCache();
     }
-  }
 
-  async cacheData(){
-    const api = new PokedexAPIService();
-
-    api.getPokemon().then((pokemon: Pokemon[]) => {
-      pokemon.forEach((p: Pokemon) => {
-        if(p.id !== undefined) {
-          localStorage.setItem(p.id.toString(), p.toJson());
-        }
-      })
-    });
+    return this.getPokemon;
   }
 
   get getPokemon(): Pokemon[] {
-    return this.pokemon;
+    return this._pokemon;
   }
 
-  loadFromCache() {
+  private async loadFromAPI(): Promise<Pokemon[]> {
+    const api = new PokedexAPIService();
+    
+    return api.getPokemon().then((pokemon: Pokemon[]) => pokemon);
+  }
+
+  private populateCache() {
+    this._pokemon.forEach((p: Pokemon) => {
+      if(p.id !== undefined) {
+        localStorage.setItem(p.id.toString(), p.toJson());
+      }
+    })
+  }
+
+  async loadFromCache() {
     let output = [];
     for (let i = 1; i < PokemonDataService.MAX_POKEMON_ID; i++) {
       const json = localStorage.getItem(i.toString());
@@ -40,7 +45,7 @@ class PokemonDataService {
       }
     }
 
-    this.pokemon = output;
+    this._pokemon = output;
   }
 
   private get isCached(): boolean {
