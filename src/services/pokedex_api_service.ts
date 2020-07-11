@@ -5,7 +5,7 @@ import Pokemon from '../models/pokemon';
 export default class PokedexAPIService {
   static readonly URI = 'https://pokeapi.co/api/v2/pokemon';
 
-  async getPokemon(limit = 151): Promise<Array<Pokemon>> {
+  async getPokemon(limit = 151): Promise<Pokemon[]> {
     const url = `${PokedexAPIService.URI}?limit=${limit}`;
     const response = await fetch(url);
     const parsed: APIListResponse = await response.json();

@@ -4,15 +4,31 @@ export default class Pokemon {
   name: string;
   url: string;
   id?: number;
-  types?: Array<PokemonType>;
+  types?: PokemonType[];
 
-  constructor(name: string, url: string) {
+  constructor(name: string, url: string, id?: number, types?: PokemonType[]) {
     this.name = name;
     this.url = url;
-    this.setId();
+    this.id = id;
+    this.types = types;
+    this.ensureID();
   }
 
-  private setId() {
+  toJson(): string {
+    return JSON.stringify(this);
+  }
+
+  static fromJson(json: string): Pokemon {
+    const parsed = JSON.parse(json);
+
+    return new Pokemon(parsed.name, parsed.url, parsed.id, parsed.types);
+  }
+
+  get key(): number | string {
+    return this.id || this.name;
+  }
+
+  private ensureID() {
     if(this.id) {
       return;
     }

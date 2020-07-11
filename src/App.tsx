@@ -1,15 +1,19 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import './App.css';
 
-import PokedexAPIService from './services/pokedex_api_service';
 import Pokemon from './models/pokemon';
 import PokemonList from './components/PokemonList';
+import PokemonDataService from './services/pokemon_data_service';
 
 function App() {
   const [pokemon, setPokemon] = useState<Pokemon[] | null>([]);
+  const dataService = new PokemonDataService();
 
-  const api = new PokedexAPIService();
-  api.getPokemon().then((pokemon: Pokemon[]) => setPokemon(pokemon));
+  // empty dependency array to ensure it only triggers once
+  useEffect(() => {
+    dataService.init()
+      .then(() => setPokemon(dataService.getPokemon))
+  }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
   return (
     <div className="App">
@@ -21,3 +25,4 @@ function App() {
 }
 
 export default App;
+  

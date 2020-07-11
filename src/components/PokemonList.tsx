@@ -5,7 +5,7 @@ import PokemonListItem from './PokemonListItem';
 const PokemonList: React.FC<{ pokemon: Pokemon[] | null }> = ({ pokemon }) => {
   return (
     <ul>
-      { pokemon?.map((p) => <PokemonListItem pokemon={p} />) }
+      { pokemon?.map((p) => <PokemonListItem pokemon={p} key={p.key} />) }
     </ul>
   );
 }
