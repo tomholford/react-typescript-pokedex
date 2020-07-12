@@ -1,5 +1,6 @@
 import Pokemon from "../models/pokemon";
 import PokedexAPIService from "./pokedex_api_service";
+import PokemonType from "../models/pokemon_type";
 
 class PokemonDataService {
   static readonly MAX_POKEMON_ID = 152;
@@ -9,6 +10,7 @@ class PokemonDataService {
   async load(): Promise<Pokemon[]> {
     if(!this.isCached) {
       this._pokemon = await this.loadFromAPI();
+      await this.loadTypes();
       this.populateCache();
     } else {
       this.loadFromCache();
@@ -27,12 +29,34 @@ class PokemonDataService {
     return api.getPokemon().then((pokemon: Pokemon[]) => pokemon);
   }
 
+  private async loadTypes() {
+    const queue = this._pokemon.map((p: Pokemon) => this.updateTypes(p));
+
+    return Promise.all(queue);
+  }
+
+  async updateTypes(pokemon: Pokemon) {
+    if(pokemon.types) {
+      return;
+    }
+
+    const api = new PokedexAPIService();
+
+    return api.getTypes(pokemon).then((types: PokemonType[]) => { 
+      pokemon.types = types;
+    })
+  }
+
   private populateCache() {
     this._pokemon.forEach((p: Pokemon) => {
-      if(p.id !== undefined) {
-        localStorage.setItem(p.id.toString(), p.toJson());
-      }
+      this.updateCache(p);
     })
+  }
+
+  updateCache(pokemon: Pokemon) {
+    if(pokemon.id !== undefined) {
+      localStorage.setItem(pokemon.id.toString(), pokemon.toJson());
+    }
   }
 
   async loadFromCache() {

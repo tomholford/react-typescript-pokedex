@@ -1,6 +1,7 @@
 import React from 'react';
 import Pokemon from '../models/pokemon';
-import PokemonType from '../interfaces/pokemon_type';
+import PokemonType from '../models/pokemon_type';
+import PokemonTypeBadge from './PokemonTypeBadge';
 
 const PokemonListItem: React.FC<{ pokemon: Pokemon }> = ({ pokemon }) => {
   return (
@@ -8,7 +9,7 @@ const PokemonListItem: React.FC<{ pokemon: Pokemon }> = ({ pokemon }) => {
       <article className="level">
         <figure className="level-item">
           <p className="image is-64x64">
-            <img src={pokemon.spriteURL} alt=""/>
+            {/* <img src={pokemon.spriteURL} alt=""/> */}
           </p>
         </figure>
         <div className="level-item">
@@ -19,7 +20,7 @@ const PokemonListItem: React.FC<{ pokemon: Pokemon }> = ({ pokemon }) => {
         <div className="level-item">
           <div className="content">
             <div className="tags are-large">
-              { pokemon.types?.map((type: PokemonType) => <span className="tag is-link is-light">{type.type}</span>) }
+              { pokemon.types?.map((type: PokemonType) => <PokemonTypeBadge key={type.key} type={type} />) }
             </div>
           </div>
         </div>

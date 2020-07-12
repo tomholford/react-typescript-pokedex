@@ -7,11 +7,13 @@ import PokemonDataService from './services/pokemon_data_service';
 
 function App() {
   const [pokemon, setPokemon] = useState<Pokemon[] | null>([]);
-
   const dataService = new PokemonDataService();
+
   useEffect(() => {
     dataService.load()
-      .then((pokemon: Pokemon[]) => setPokemon(pokemon));
+      .then((pokemon: Pokemon[]) => {
+        setPokemon(pokemon);
+      });
   }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
   return (

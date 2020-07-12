@@ -1,4 +1,4 @@
-import PokemonType from '../interfaces/pokemon_type';
+import PokemonType from './pokemon_type';
 
 export default class Pokemon {
   name: string;
