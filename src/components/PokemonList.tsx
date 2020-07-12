@@ -4,7 +4,7 @@ import PokemonListItem from './PokemonListItem';
 
 const PokemonList: React.FC<{ pokemon: Pokemon[] | null }> = ({ pokemon }) => {
   return (
-    <div className="">
+    <div className="columns is-mobile is-multiline">
       { pokemon?.map((p) => <PokemonListItem pokemon={p} key={p.key} />) }
     </div>
   );

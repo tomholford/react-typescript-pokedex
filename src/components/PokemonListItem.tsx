@@ -5,30 +5,24 @@ import PokemonTypeBadge from './PokemonTypeBadge';
 
 const PokemonListItem: React.FC<{ pokemon: Pokemon }> = ({ pokemon }) => {
   return (
-    <div className="box">
-      <article className="columns is-vcentered">
-        <div className="column">
-          <div className="content">
-            <figure className="poke-image">
-              <p className="image is-64x64">
-                <img src={pokemon.spriteURL} alt=""/>
-              </p>
-            </figure>
+    <div className="column is-full-mobile is-half-tablet is-half-desktop is-one-third-widescreen is-one-quarter-fullhd">
+      <div className="card">
+        <header className="card-header">
+          <p className="card-header-title is-capitalized">
+          {pokemon.displayName}
+          </p>
+        </header>
+        <div className="card-image">
+          <figure className="image is-square">
+            <img src={pokemon.spriteURL} alt=""/>
+          </figure>
+        </div>
+        <div className="card-content">
+          <div className="tags are-large">
+            { pokemon.types?.map((type: PokemonType) => <PokemonTypeBadge key={type.key} type={type} />) }
           </div>
         </div>
-        <div className="column">
-          <div className="content">
-            <p className="subtitle is-capitalized has-text-centered">{pokemon.displayName}</p>
-          </div>
-        </div>
-        <div className="column">
-          <div className="content">
-            <div className="tags are-large">
-              { pokemon.types?.map((type: PokemonType) => <PokemonTypeBadge key={type.key} type={type} />) }
-            </div>
-          </div>
-        </div>
-      </article>
+      </div>
     </div>
   );
 }

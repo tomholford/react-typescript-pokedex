@@ -41,11 +41,16 @@ function App() {
   }, [searchQuery]); // eslint-disable-line react-hooks/exhaustive-deps
 
   return (
-    <div className="App">
+    <div className="container">
+        <h1 className="title">
+          Pokedex
+        </h1>
       { 
         dataLoaded ? 
           <React.Fragment>
-            <p>Showing {filteredPokemon?.length || 0} result(s).</p>
+            <div className="content">
+              <p>Showing {filteredPokemon?.length || 0} result(s).</p>
+            </div>
             <SearchBox onChange={onSearch} />
             <PokemonList pokemon={filteredPokemon} />
           </React.Fragment> :
