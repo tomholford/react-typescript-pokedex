@@ -1,5 +1,7 @@
 @import "bulma";
 
-p.displayname {
-  text-transform: capitalize;
+figure.poke-image {
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: center;
 }
